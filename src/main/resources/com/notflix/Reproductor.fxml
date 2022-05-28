@@ -60,6 +60,6 @@
             <Insets top="5.0" />
          </padding>
       </Label>
-      <Pane fx:id="rellenoSliderTiempo" layoutX="7.0" layoutY="522.0" maxHeight="7.0" minHeight="7.0" prefHeight="7.0" prefWidth="0.0" style="-fx-background-color: red; -fx-background-radius: 15%;" AnchorPane.bottomAnchor="32.0" AnchorPane.leftAnchor="9.0" />
+      <Pane fx:id="rellenoSliderTiempo" layoutX="7.0" layoutY="522.0" maxHeight="7.0" minHeight="7.0" minWidth="0.0" prefHeight="7.0" prefWidth="0.0" style="-fx-background-color: red; -fx-background-radius: 15%;" AnchorPane.bottomAnchor="32.0" AnchorPane.leftAnchor="9.0" />
    </children>
 </AnchorPane>

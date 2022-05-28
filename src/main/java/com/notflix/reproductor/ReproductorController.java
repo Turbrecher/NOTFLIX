@@ -83,13 +83,17 @@ public class ReproductorController implements Initializable {
 
     @FXML
     void colorearBlanquito(MouseEvent event) {
-        if (event.getTarget().equals(btnFullScreen)) {
+        final boolean PULSAR_BTN_FULLSCREEN = event.getTarget().equals(btnFullScreen);
+        final boolean PULSAR_BTN_MINIMIZE = event.getTarget().equals(btnMinimize);
+        final boolean PULSAR_BTN_PLAY = event.getTarget().equals(btnPlay);
+
+        if (PULSAR_BTN_FULLSCREEN) {
             btnFullScreen.setStyle("-fx-background-color:#494b4d");
         }
-        if (event.getTarget().equals(btnMinimize)) {
+        if (PULSAR_BTN_MINIMIZE) {
             btnMinimize.setStyle("-fx-background-color:#494b4d");
         }
-        if (event.getTarget().equals(btnPlay)) {
+        if (PULSAR_BTN_PLAY) {
             btnPlay.setStyle("-fx-background-color:#494b4d");
         }
 
@@ -111,7 +115,9 @@ public class ReproductorController implements Initializable {
 
     @FXML
     void exitFullScreen(KeyEvent event) {
-        if (event.getCode().equals(event.getCode().F11) || event.getCode().equals(event.getCode().ESCAPE)) {
+        final boolean PULSAR_F11 =event.getCode().equals(event.getCode().F11);
+        final boolean PULSAR_ESC =event.getCode().equals(event.getCode().ESCAPE) ;
+        if (PULSAR_F11 || PULSAR_ESC) {
             miniWindowMode();
             reescalarBotones();
         }
@@ -176,15 +182,10 @@ public class ReproductorController implements Initializable {
 
 
     private void reescalarBotones() {
-
         Stage ventana = (Stage) video.getScene().getWindow();
 
-        //btnFullScreen.setLayoutX(ventana.getWidth() - btnFullScreen.getWidth());
         btnMinimize.setLayoutX(ventana.getWidth() - (btnClose.getWidth() * 2));
         btnClose.setLayoutX(ventana.getWidth() - (btnClose.getWidth()));
-        //sliderDuration.setMinWidth(ventana.getWidth() - btnFullScreen.getWidth() - sliderDuration.getLayoutX());
-        //sliderDuration.setPrefWidth(ventana.getWidth() - btnFullScreen.getWidth() - sliderDuration.getLayoutX());
-
     }
 
     @FXML
@@ -256,13 +257,13 @@ public class ReproductorController implements Initializable {
             video.setFitWidth(width / 2);
 
 
-            video.setX(0);
-            video.setY(0);
+            //video.setX(0);
+            //video.setY(0);
 
-            //INICIAMOS TAREAS:
-            tareaOcultarUI = new TareaOcultarUI(sliderDuration, sliderVolume, labelTiempo, btnPlay, btnFullScreen, mp);
+            //INICIAMOS TAREAS QUE SE EJECUTAN SIMULTANEAMENTE:
+            tareaOcultarUI = new TareaOcultarUI(sliderDuration, sliderVolume, labelTiempo, btnPlay, btnFullScreen, mp,rellenoSliderTiempo);
             tareaOcultarUI.start();
-            tareaMostrarUI = new TareaMostrarUI(sliderDuration, sliderVolume, labelTiempo, btnPlay, btnFullScreen, mp);
+            tareaMostrarUI = new TareaMostrarUI(sliderDuration, sliderVolume, labelTiempo, btnPlay, btnFullScreen, mp,rellenoSliderTiempo);
             tareaMostrarUI.start();
             tareaOffSetSlider = new TareaOffSetSlider(sliderDuration,rellenoSliderTiempo);
             tareaOffSetSlider.start();

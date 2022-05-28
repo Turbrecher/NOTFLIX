@@ -3,8 +3,6 @@ package com.notflix.reproductor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.MediaPlayer;
 
@@ -12,7 +10,6 @@ import java.awt.*;
 
 public class TareaOcultarUI extends Thread {
 
-    private MouseEvent event;
     private Slider sliderDuracion, sliderVolumen;
     private Label labelDuracion;
     private Button btnPlay, btnFullScreen;

@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -23,6 +24,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
 
 public class ReproductorController implements Initializable {
     @FXML
@@ -52,11 +54,14 @@ public class ReproductorController implements Initializable {
 
     @FXML
     private MediaView video;
+    @FXML
+    private Pane rellenoSliderTiempo;
     private Media media;
     private MediaPlayer mp;
     private double offSetX, offSetY;
     private int horas, minutos, segundos;
     private double width, height;
+
 
     @FXML
     void cambiarDuracion(MouseEvent event) {
@@ -73,6 +78,7 @@ public class ReproductorController implements Initializable {
         ((Stage) (video.getScene().getWindow())).close();
         tareaOcultarUI.stop();
         tareaMostrarUI.stop();
+        tareaOffSetSlider.stop();
     }
 
     @FXML
@@ -166,10 +172,6 @@ public class ReproductorController implements Initializable {
             mp.pause();
             playImage.setImage(new Image(Main.class.getResource("Recursos/play.png").toString()));
         }
-
-        video.setFitWidth(video.getScene().getWindow().getWidth());
-        video.setFitHeight(video.getScene().getWindow().getHeight());
-
     }
 
 
@@ -214,10 +216,10 @@ public class ReproductorController implements Initializable {
     }
 
 
-    //TAREA SEGUNDO PLANO:
+    //TAREAS SEGUNDO PLANO:
     private TareaOcultarUI tareaOcultarUI;
     private TareaMostrarUI tareaMostrarUI;
-
+    private TareaOffSetSlider tareaOffSetSlider;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -257,11 +259,13 @@ public class ReproductorController implements Initializable {
             video.setX(0);
             video.setY(0);
 
-
+            //INICIAMOS TAREAS:
             tareaOcultarUI = new TareaOcultarUI(sliderDuration, sliderVolume, labelTiempo, btnPlay, btnFullScreen, mp);
             tareaOcultarUI.start();
             tareaMostrarUI = new TareaMostrarUI(sliderDuration, sliderVolume, labelTiempo, btnPlay, btnFullScreen, mp);
             tareaMostrarUI.start();
+            tareaOffSetSlider = new TareaOffSetSlider(sliderDuration,rellenoSliderTiempo);
+            tareaOffSetSlider.start();
 
 
             mp.currentTimeProperty().addListener((observableValue, duration, t1) -> {
@@ -273,10 +277,9 @@ public class ReproductorController implements Initializable {
                 labelTiempo.setText(imprimeHoras() + " : " + imprimeMinutos() + " : " + imprimeSegundos());
 
                 if (!sliderDuration.isPressed()) {
+                    double offSet = sliderDuration.getValue()*0.15;
                     sliderDuration.setValue(mp.getCurrentTime().toSeconds() / mp.getTotalDuration().toSeconds() * 100);
-
                 }
-
 
             });
 

@@ -18,8 +18,6 @@ public class TareaMostrarUI extends Thread {
     private MediaPlayer mediaPlayer;
 
     public TareaMostrarUI() {
-        event = new MouseEvent(MouseEvent.MOUSE_MOVED, 0, 0, 0, 0, MouseButton.NONE,
-                1, true, true, true, true, true, true, true, true, true, true, null);
     }
 
     public TareaMostrarUI(Slider sliderDuracion, Slider sliderVolumen, Label labelDuracion, Button btnPlay, Button btnFullScreen, MediaPlayer mediaPlayer) {
